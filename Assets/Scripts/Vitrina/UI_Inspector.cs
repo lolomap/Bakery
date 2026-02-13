@@ -1,22 +1,25 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using System.Collections.Generic;
 
-public class UI_Inspector : MonoBehaviour {
+public class UI_Inspector : MonoBehaviour
+{
     public GameObject panel;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI statsText;
-    public Slider freshnessBar;
+    public Transform container; // Объект с Vertical Layout Group
+    public GameObject itemRowPrefab; // Тот самый префаб из шага 2
 
-    public void ShowItem(ItemInstance item) {
+    public void ShowShowcase(List<ItemInstance> items)
+    {
         panel.SetActive(true);
-        nameText.text = item.data.itemName;
         
-        float attract = item.GetAttractiveness();
-        string status = attract > 0.8f ? "Свежайшее!" : attract > 0.4f ? "Нормально" : "Черствое...";
-        
-        statsText.text = $"{item.data.description}\n\nСтатус: {status}";
-        freshnessBar.value = attract; // Слайдер от 0 до 1
+        // Очищаем старые строки
+        foreach (Transform child in container) Destroy(child.gameObject);
+
+        // Создаем новые
+        foreach (var item in items)
+        {
+            GameObject row = Instantiate(itemRowPrefab, container);
+            row.GetComponent<UI_ItemRow>().Setup(item);
+        }
     }
 
     public void Close() => panel.SetActive(false);

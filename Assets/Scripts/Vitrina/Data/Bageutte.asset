@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProductData
   itemName: 
   description: 
-  icon: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  modelPrefab: {fileID: 6356518283660689179, guid: 86120ce82ebd9a1429d04ade1cae9d6c, type: 3}
   basePrice: 0
   maxShelfLife: 100

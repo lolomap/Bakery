@@ -1,39 +1,52 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Showcase : MonoBehaviour {
-    public Transform[] slots; 
-    private Dictionary<int, ItemInstance> displayedItems = new Dictionary<int, ItemInstance>();
-    private GameObject[] spawnedModels;
+public class Showcase : MonoBehaviour 
+{
+    [Header("Физические слоты")]
+    public Transform[] visualSlots; // Перетащи сюда пустые объекты-точки в инспекторе
+    
+    [Header("Настройки товаров")]
+    public List<ProductData> availableProducts;
+    public List<ItemInstance> itemsOnDisplay = new List<ItemInstance>();
 
-    void Awake() {
-        spawnedModels = new GameObject[slots.Length];
-    }
+    // Список для хранения созданных 3D моделей (чтобы удалять их потом)
+    private List<GameObject> spawnedModels = new List<GameObject>();
 
-    // Метод для выкладки товара на конкретный слот
-    public void PlaceItem(int slotIndex, ProductData product) {
-        if (slotIndex < 0 || slotIndex >= slots.Length) return;
+    public void AddRandomProduct() 
+    {
+        // ПРОВЕРКА: Если товаров уже столько же, сколько слотов — ничего не делаем
+        if (itemsOnDisplay.Count >= visualSlots.Length) {
+            Debug.Log("Витрина полна!");
+            return;
+        }
 
-        // Удаляем старую модель, если была
-        if (spawnedModels[slotIndex] != null) Destroy(spawnedModels[slotIndex]);
-
-        ItemInstance newItem = new ItemInstance(product);
-        displayedItems[slotIndex] = newItem;
-
-        // Спавним визуал
-        GameObject model = Instantiate(product.modelPrefab, slots[slotIndex].position, slots[slotIndex].rotation);
-        model.transform.SetParent(slots[slotIndex]);
-        spawnedModels[slotIndex] = model;
-    }
-
-    // Каджое обновление времени продукты чуть-чуть портятся
-    void Update() {
-        foreach (var item in displayedItems.Values) {
-            if (item.currentFreshness > 0) {
-                item.currentFreshness -= Time.deltaTime * 0.5f; // Скорость порчи
-            }
+        if (availableProducts.Count > 0) {
+            ProductData data = availableProducts[Random.Range(0, availableProducts.Count)];
+            itemsOnDisplay.Add(new ItemInstance(data));
+            
+            RefreshPhysicalModels(); // Обновляем модели на полке
         }
     }
 
-    public ItemInstance GetItemAtSlot(int index) => displayedItems.ContainsKey(index) ? displayedItems[index] : null;
+    public void RefreshPhysicalModels()
+    {
+        // 1. Удаляем старые модели
+        foreach (var model in spawnedModels) Destroy(model);
+        spawnedModels.Clear();
+
+        // 2. Спавним новые модели согласно списку товаров
+        for (int i = 0; i < itemsOnDisplay.Count; i++)
+        {
+            if (i >= visualSlots.Length) break;
+
+            GameObject prefab = itemsOnDisplay[i].data.modelPrefab;
+            if (prefab != null)
+            {
+                GameObject newModel = Instantiate(prefab, visualSlots[i].position, visualSlots[i].rotation);
+                newModel.transform.SetParent(visualSlots[i]);
+                spawnedModels.Add(newModel);
+            }
+        }
+    }
 }

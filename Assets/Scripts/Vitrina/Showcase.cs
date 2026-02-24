@@ -30,23 +30,32 @@ public class Showcase : MonoBehaviour
     }
 
     public void RefreshPhysicalModels()
+{
+    foreach (var model in spawnedModels) Destroy(model);
+    spawnedModels.Clear();
+
+    for (int i = 0; i < itemsOnDisplay.Count; i++)
     {
-        // 1. Удаляем старые модели
-        foreach (var model in spawnedModels) Destroy(model);
-        spawnedModels.Clear();
+        if (i >= visualSlots.Length) break;
 
-        // 2. Спавним новые модели согласно списку товаров
-        for (int i = 0; i < itemsOnDisplay.Count; i++)
+        Sprite itemSprite = itemsOnDisplay[i].data.worldSprite; // Берем спрайт
+        if (itemSprite != null)
         {
-            if (i >= visualSlots.Length) break;
-
-            GameObject prefab = itemsOnDisplay[i].data.modelPrefab;
-            if (prefab != null)
-            {
-                GameObject newModel = Instantiate(prefab, visualSlots[i].position, visualSlots[i].rotation);
-                newModel.transform.SetParent(visualSlots[i]);
-                spawnedModels.Add(newModel);
-            }
+            // Создаем новый объект для спрайта
+            GameObject newSpriteObj = new GameObject("ItemSprite_" + i);
+            
+            // Добавляем SpriteRenderer и назначаем спрайт
+            SpriteRenderer sr = newSpriteObj.AddComponent<SpriteRenderer>();
+            sr.sprite = itemSprite;
+            
+            // Настройка для вида сверху/изометрии
+            // Спрайты должны стоять вертикально или лежать (зависит от твоей камеры)
+            newSpriteObj.transform.position = visualSlots[i].position;
+            newSpriteObj.transform.rotation = visualSlots[i].rotation;
+            newSpriteObj.transform.SetParent(visualSlots[i]);
+            
+            spawnedModels.Add(newSpriteObj);
         }
     }
+}
 }

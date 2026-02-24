@@ -5,7 +5,7 @@ public class ProductData : ScriptableObject {
     public string itemName;
     [TextArea] public string description;
     public Sprite icon;
-    public GameObject modelPrefab;
+    public Sprite worldSprite;
     public float basePrice;
     public float maxShelfLife = 100f; // В условных единицах свежести
 }

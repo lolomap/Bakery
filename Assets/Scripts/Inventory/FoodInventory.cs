@@ -1,17 +1,5 @@
-﻿using System;
-using GameData;
-using UnityEngine;
+﻿using GameData;
 namespace Inventory
 {
-    public class FoodInventory : MonoBehaviour
-    {
-        public Vector2Int Size;
-        
-        public BaseInventory<FoodSO> Food { get; private set; }
-
-        private void Awake()
-        {
-            Food = new(Size.x, Size.y);
-        }
-    }
+    public class FoodInventory : InventoryComponent<FoodSO> {}
 }

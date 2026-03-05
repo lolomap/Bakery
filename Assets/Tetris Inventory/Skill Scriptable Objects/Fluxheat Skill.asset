@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52a30dc150c4aada3bb105f74a760f5, type: 3}
+  m_Name: Fluxheat Skill
+  m_EditorClassIdentifier: Scripts::Logic.Merge.SkillTetrisSO
+  shape: 0
+  nameString: Fluxheat
+  prefab: {fileID: 5187718625820519756, guid: c7690ac5acc01324e9288e606b7a56bb, type: 3}
+  id: 6
+  nameRu: 
+  nameEn: 
+  type: 8
+  rarity: 0
+  itemSprite: {fileID: 21300000, guid: 7342945bf032e9b45b9b955d98f6e3b2, type: 3}

@@ -1,7 +1,8 @@
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "NewProduct", menuName = "Bakery/Product")]
-public class ProductData : ScriptableObject {
+public class ProductData : ItemTetrisSO {
     public string itemName;
     [TextArea] public string description;
     public Sprite icon;

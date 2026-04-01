@@ -18,10 +18,16 @@ public class InventoryTetrisSetup : MonoBehaviour
     public int gridHeight = 3;
     public float cellSize = 75f;
     public GameObject cellTemplate;
+    public ListAddItemTetris contentSetup;
 
     [Header("Internal References")]
     [HideInInspector] public InventoryTetris inventoryTetris;
     [HideInInspector] public InventoryTetrisBackground background;
+
+    private void Start()
+    {
+        inventoryTetris.Load(contentSetup);
+    }
 
     public void SetupInventory()
     {
@@ -42,8 +48,6 @@ public class InventoryTetrisSetup : MonoBehaviour
         gridLayout.constraintCount = gridWidth;
 
         background.inventoryTetris = inventoryTetris;
-        // TODO я не знаю, почему, но код из сетапа не успевает сработать до падения
-        // внутри InventoryTetrisBackground.InitializeGrid()
         background.cellTemplate = cellTemplate;
 
 

@@ -130,7 +130,7 @@ namespace Utils
 
     public static class Colors
     {
-        public static Color32 DefaultCellBackgroundColor = new Color32(255, 255, 255, 0);
+        public static Color32 DefaultCellBackgroundColor = new Color32(255, 255, 255, 255);
         public static Color32 AvailableCellBackgroundColor = new(46, 204, 113, 100);
         public static Color32 UnavailableCellBackgroundColor = new(231, 76, 60, 100);
     }

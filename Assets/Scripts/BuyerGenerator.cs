@@ -1,33 +1,57 @@
  
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuyerGenerator : MonoBehaviour
 {
     
+    public TimeController TM;
     [Header("Настройки генерации")]
     [SerializeField] private float minPatienceTime = 30f;
     [SerializeField] private float maxPatienceTime = 120f;
     
+    
+    [Serializable]
+    public struct GroupWeight
+    {
+        public BuyerGroup group;
+        public AnimationCurve weightCurve; // Кривая: Time (0..1) -> Weight (0..1)
+    }
+    
+    
+    // Словарь, определяющий, как меняется популярность группы со временем
+    // 0.0 - начало игры (сентябрь/октябрь 1917), 1.0 - конец (декабрь 1917)
+    private Dictionary<BuyerGroup, Func<float, float>> _weightCalculators;
+    
     [Header("Вероятности групп (%)")]
     
+        
     [SerializeField]private List<BuyerGroup> GroupChances;
 
     void Awake()
     {
         foreach (BuyerGroup group in Enum.GetValues(typeof(BuyerGroup)))
-        GroupChances.Add(group);
+            GroupChances.Add(group);
+        InitWeightRules();
     }
 
     public BuyerData GenerateRandomBuyer()
     {
         BuyerData newBuyer = new BuyerData();
         
-        newBuyer.group = GenerateRandomGroup();
+        float progress = TM.GetStoryProgress();
         
+        newBuyer.group = GenerateWeightedGroup(progress);
+        
+        // 2. ОБЯЗАТЕЛЬНО создаем объект Demand, иначе будет ошибка NullReference
+        newBuyer.demand = new Demand();
+        newBuyer.demand.type = (DemandType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(DemandType)).Length);
+        newBuyer.demand.basePrice = 10f;
+        newBuyer.demand.quantity = UnityEngine.Random.Range(1, 4);
+
         newBuyer.buyerName = GenerateNameForGroup(newBuyer.group);
-        
         newBuyer.maxPrice = CalculateMaxPrice(newBuyer.demand.basePrice, newBuyer.group);
         
         newBuyer.greetingPhrases = GenerateGreetingPhrases(newBuyer.group);
@@ -35,6 +59,52 @@ public class BuyerGenerator : MonoBehaviour
         newBuyer.angryPhrases = GenerateAngryPhrases(newBuyer.group);
         newBuyer.thankPhrases = GenerateThankPhrases(newBuyer.group);
         return newBuyer;
+    }
+    private BuyerGroup GenerateWeightedGroup(float progress)
+    {
+        // Считаем текущие веса всех групп исходя из времени
+        Dictionary<BuyerGroup, float> currentWeights = _weightCalculators.ToDictionary(
+            x => x.Key, 
+            x => x.Value(progress)
+        );
+
+        float totalWeight = currentWeights.Values.Sum();
+        float randomValue = UnityEngine.Random.Range(0, totalWeight);
+        float cumulativeWeight = 0f;
+
+        foreach (var weight in currentWeights)
+        {
+            cumulativeWeight += weight.Value;
+            if (randomValue <= cumulativeWeight)
+            {
+                return weight.Key;
+            }
+        }
+
+        return BuyerGroup.Peasants; // Дефолт
+    }
+    
+    private void InitWeightRules()
+    {
+        _weightCalculators = new Dictionary<BuyerGroup, Func<float, float>>
+        {
+            // ИМПЕРСКИЕ (Угасают к концу)
+            { BuyerGroup.Landowners, (p) => Mathf.Lerp(1.0f, 0.05f, p) },
+            { BuyerGroup.Bohemians, (p) => Mathf.Lerp(0.8f, 0.1f, p) },
+            { BuyerGroup.Former, (p) => Mathf.Lerp(0.7f, 0.0f, p) },
+            { BuyerGroup.ProvisionalGovernmentSupporters, (p) => Mathf.Lerp(1.0f, 0.0f, p) },
+
+            // НЕЙТРАЛЬНЫЕ / ОБЩИЕ (Всегда есть, но могут чуть просесть или вырасти)
+            { BuyerGroup.Peasants, (p) => 0.6f },
+            { BuyerGroup.Beggars, (p) => Mathf.Lerp(0.3f, 0.8f, p) }, // Нищих становится больше
+            { BuyerGroup.AmnestiedPrisoners, (p) => 0.4f },
+
+            // СОВЕТСКИЕ (Растут к концу)
+            { BuyerGroup.SovietSupporters, (p) => Mathf.Lerp(0.1f, 1.2f, p) },
+            { BuyerGroup.Workers, (p) => Mathf.Lerp(0.4f, 1.0f, p) },
+            { BuyerGroup.Speculators, (p) => Mathf.Lerp(0.2f, 1.0f, p) }, // Мешочники плодятся в разруху
+            { BuyerGroup.Deserters, (p) => Mathf.Lerp(0.3f, 0.9f, p) }
+        };
     }
     
     private BuyerGroup GenerateRandomGroup()

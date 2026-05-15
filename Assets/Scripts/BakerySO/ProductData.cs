@@ -1,5 +1,27 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
+public enum ProductType
+{
+    Default,
+        
+    Ingredient,
+    Topping,
+    
+    Dough,
+    FormedBase,
+    Baked
+}
+
+public enum ProductCategory
+{
+    Default,
+        
+    Pastry,
+    Bread,
+    Confectionery,
+    Failed
+}
 
 [CreateAssetMenu(fileName = "NewProduct", menuName = "Bakery/Product")]
 public class ProductData : ItemTetrisSO {
@@ -9,4 +31,8 @@ public class ProductData : ItemTetrisSO {
     public Sprite worldSprite;
     public float basePrice;
     public float maxShelfLife = 100f; // В условных единицах свежести
+
+    public ProductType Type;
+    public ProductCategory Category;
+    public float Quality;
 }

@@ -79,31 +79,31 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateAllTexts()
     {
-        flourText.text = "Мука: " + flour;
-        waterText.text = "Вода: " + water;
-        oilText.text = "Масло: " + oil;
-        sodaText.text = "Сода: " + soda;
-        vinegarText.text = "Уксус: " + vinegar;
-        yeastText.text = "Дрожжи: " + yeast;
-        saltText.text = "Соль: " + salt;
-        sugarText.text = "Сахар: " + sugar;
-        eggsText.text = "Яйца: " + eggs;
-        milkText.text = "Молоко: " + milk;
-        butterText.text = "Масло слив.: " + butter;
+        flourText.text = "РњСѓРєР°: " + flour;
+        waterText.text = "Р’РѕРґР°: " + water;
+        oilText.text = "РњР°СЃР»Рѕ: " + oil;
+        sodaText.text = "РЎРѕРґР°: " + soda;
+        vinegarText.text = "РЈРєСЃСѓСЃ: " + vinegar;
+        yeastText.text = "Р”СЂРѕР¶Р¶Рё: " + yeast;
+        saltText.text = "РЎРѕР»СЊ: " + salt;
+        sugarText.text = "РЎР°С…Р°СЂ: " + sugar;
+        eggsText.text = "РЇР№С†Р°: " + eggs;
+        milkText.text = "РњРѕР»РѕРєРѕ: " + milk;
+        butterText.text = "РњР°СЃР»Рѕ СЃР»РёРІ.: " + butter;
 
-        smallDoughText.text = "Тесто для печенья: " + smallDough;
-        smallFormedText.text = "Заготовка для печенья: " + smallFormed;
-        pastryText.text = "Печенье: " + pastry;
+        smallDoughText.text = "РўРµСЃС‚Рѕ РґР»СЏ РїРµС‡РµРЅСЊСЏ: " + smallDough;
+        smallFormedText.text = "Р—Р°РіРѕС‚РѕРІРєР° РґР»СЏ РїРµС‡РµРЅСЊСЏ: " + smallFormed;
+        pastryText.text = "РџРµС‡РµРЅСЊРµ: " + pastry;
 
-        breadDoughText.text = "Тесто для хлеба: " + breadDough;
-        breadFormedText.text = "Заготовка для хлеба: " + breadFormed;
-        breadText.text = "Хлеб: " + bread;
+        breadDoughText.text = "РўРµСЃС‚Рѕ РґР»СЏ С…Р»РµР±Р°: " + breadDough;
+        breadFormedText.text = "Р—Р°РіРѕС‚РѕРІРєР° РґР»СЏ С…Р»РµР±Р°: " + breadFormed;
+        breadText.text = "РҐР»РµР±: " + bread;
 
-        sweetDoughText.text = "Тесто для сладостей: " + sweetDough;
-        sweetFormedText.text = "Заготовка для сладостей: " + sweetFormed;
-        sweetCakeText.text = "Сладости: " + sweetCake;
-        creamText.text = "Крем: " + cream;
-        sweetFinalText.text = "Торт: " + sweetFinal;
+        sweetDoughText.text = "РўРµСЃС‚Рѕ РґР»СЏ СЃР»Р°РґРѕСЃС‚РµР№: " + sweetDough;
+        sweetFormedText.text = "Р—Р°РіРѕС‚РѕРІРєР° РґР»СЏ СЃР»Р°РґРѕСЃС‚РµР№: " + sweetFormed;
+        sweetCakeText.text = "РЎР»Р°РґРѕСЃС‚Рё: " + sweetCake;
+        creamText.text = "РљСЂРµРј: " + cream;
+        sweetFinalText.text = "РўРѕСЂС‚: " + sweetFinal;
     }
 
     public bool HasEnough(int flourNeeded, int waterNeeded, int oilNeeded, int sodaNeeded, int vinegarNeeded)
@@ -187,11 +187,11 @@ public class InventoryManager : MonoBehaviour
             salt -= 1;
             breadDough += 1;
             UpdateAllTexts();
-            Debug.Log("Замесили тесто для хлеба!");
+            Debug.Log("Р—Р°РјРµСЃРёР»Рё С‚РµСЃС‚Рѕ РґР»СЏ С…Р»РµР±Р°!");
         }
         else
         {
-            Debug.Log("Не хватает ингредиентов для хлеба!");
+            Debug.Log("РќРµ С…РІР°С‚Р°РµС‚ РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ РґР»СЏ С…Р»РµР±Р°!");
         }
     }
 
@@ -202,11 +202,11 @@ public class InventoryManager : MonoBehaviour
             breadDough -= 1;
             breadFormed += 1;
             UpdateAllTexts();
-            Debug.Log("Слепили формованный хлеб!");
+            Debug.Log("РЎР»РµРїРёР»Рё С„РѕСЂРјРѕРІР°РЅРЅС‹Р№ С…Р»РµР±!");
         }
         else
         {
-            Debug.Log("Нет теста для хлеба!");
+            Debug.Log("РќРµС‚ С‚РµСЃС‚Р° РґР»СЏ С…Р»РµР±Р°!");
         }
     }
 
@@ -217,15 +217,15 @@ public class InventoryManager : MonoBehaviour
             breadFormed -= 1;
             bread += 1;
             UpdateAllTexts();
-            Debug.Log("Испекли хлеб!");
+            Debug.Log("РСЃРїРµРєР»Рё С…Р»РµР±!");
         }
         else
         {
-            Debug.Log("Нет формованного хлеба!");
+            Debug.Log("РќРµС‚ С„РѕСЂРјРѕРІР°РЅРЅРѕРіРѕ С…Р»РµР±Р°!");
         }
     }
 
-    // Методы для сладостей
+    // РњРµС‚РѕРґС‹ РґР»СЏ СЃР»Р°РґРѕСЃС‚РµР№
     public void MakeSweetDough()
     {
         if (flour >= 1 && sugar >= 1 && eggs >= 1 && oil >= 1)
@@ -236,11 +236,11 @@ public class InventoryManager : MonoBehaviour
             oil -= 1;
             sweetDough += 1;
             UpdateAllTexts();
-            Debug.Log("Замесили сладкое тесто!");
+            Debug.Log("Р—Р°РјРµСЃРёР»Рё СЃР»Р°РґРєРѕРµ С‚РµСЃС‚Рѕ!");
         }
         else
         {
-            Debug.Log("Не хватает ингредиентов для сладостей!");
+            Debug.Log("РќРµ С…РІР°С‚Р°РµС‚ РёРЅРіСЂРµРґРёРµРЅС‚РѕРІ РґР»СЏ СЃР»Р°РґРѕСЃС‚РµР№!");
         }
     }
 
@@ -251,11 +251,11 @@ public class InventoryManager : MonoBehaviour
             sweetDough -= 1;
             sweetFormed += 1;
             UpdateAllTexts();
-            Debug.Log("Слепили сладкую заготовку!");
+            Debug.Log("РЎР»РµРїРёР»Рё СЃР»Р°РґРєСѓСЋ Р·Р°РіРѕС‚РѕРІРєСѓ!");
         }
         else
         {
-            Debug.Log("Нет сладкого теста!");
+            Debug.Log("РќРµС‚ СЃР»Р°РґРєРѕРіРѕ С‚РµСЃС‚Р°!");
         }
     }
 
@@ -266,11 +266,11 @@ public class InventoryManager : MonoBehaviour
             sweetFormed -= 1;
             sweetCake += 1;
             UpdateAllTexts();
-            Debug.Log("Испекли сладость!");
+            Debug.Log("РСЃРїРµРєР»Рё СЃР»Р°РґРѕСЃС‚СЊ!");
         }
         else
         {
-            Debug.Log("Нет сладких заготовок!");
+            Debug.Log("РќРµС‚ СЃР»Р°РґРєРёС… Р·Р°РіРѕС‚РѕРІРѕРє!");
         }
     }
 }

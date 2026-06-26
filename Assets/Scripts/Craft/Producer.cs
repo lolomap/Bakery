@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BakerySO;
+using Kitchen;
 using UnityEngine;
 namespace Craft
 {
@@ -11,13 +13,12 @@ namespace Craft
             public int Count;
             public float AverageQuality;
         }
-        
-        private struct RecipeEntry
+
+        private static ProducerConfig _config;
+
+        public static void Init()
         {
-            public string IngredientName;
-            public int Min;
-            public int Max;
-            public int Perfect;
+            _config = KitchenManager.Instance.Configuration;
         }
         
         private static ProductData Craft(List<ProductData> ingredients, List<RecipeEntry> recipe)
@@ -45,24 +46,25 @@ namespace Craft
             // Change result quality on recipe match
             foreach (RecipeEntry recipeEntry in recipe)
             {
-                IngredientStack component = composition[recipeEntry.IngredientName];
+                IngredientStack component = composition[recipeEntry.Ingredient.itemName];
                 
                 if (component.Count <= recipeEntry.Min)
                 {
-                    resultQuality -= Math.Abs(component.Count - recipeEntry.Min) * 1; //TODO: penalty modifier in SO
+                    resultQuality -= Math.Abs(component.Count - recipeEntry.Min) * _config.BaseShortagePenaltyModifier;
                 }
                 else if (component.Count >= recipeEntry.Max)
                 {
-                    resultQuality -= Math.Abs(component.Count - recipeEntry.Max) * 1; //TODO: penalty modifier in SO
+                    resultQuality -= Math.Abs(component.Count - recipeEntry.Max) * _config.BaseSurplusPenaltyModifier;
                 }
                 else if (component.Count == recipeEntry.Perfect)
                 {
-                    resultQuality += 1; //TODO: penalty modifier in SO
+                    resultQuality += _config.BasePerfectBonusModifier;
                 }
 
-                composition.Remove(recipeEntry.IngredientName);
+                composition.Remove(recipeEntry.Ingredient.itemName);
             }
-            resultQuality = composition.Values.Aggregate(resultQuality, (current, ingredient) => current - ingredient.Count * 1); //TODO: penalty
+            resultQuality = composition.Values.Aggregate(resultQuality,
+                (current, ingredient) => current - ingredient.Count * _config.BaseRedundantPenaltyModifier);
 
             ProductData result = ScriptableObject.CreateInstance<ProductData>();
             result.Quality = resultQuality;
@@ -77,18 +79,7 @@ namespace Craft
         
         public static ProductData CraftDough(List<ProductData> ingredients, Func<List<ProductData>, ProductCategory> categoryCondition)
         {
-            ProductData dough = Craft(ingredients, new() //TODO: recipes in SO
-            {
-                new() { IngredientName = "flour", Min = 1, Max = 2 },
-                new() { IngredientName = "water", Min = 0, Max = 2 },
-                new() { IngredientName = "oil", Min = 0, Max = 2 },
-                new() { IngredientName = "yeast", Min = 0, Max = 2 },
-                new() { IngredientName = "salt", Min = 0, Max = 2 },
-                new() { IngredientName = "soda", Min = 0, Max = 2 },
-                new() { IngredientName = "vinegar", Min = 0, Max = 2 },
-                new() { IngredientName = "sugar", Min = 0, Max = 2 },
-                new() { IngredientName = "egg", Min = 0, Max = 2 },
-            });
+            ProductData dough = Craft(ingredients, _config.DoughRecipe.Ingredients);
 
             bool isFailed = CheckFailed(ingredients, new List<Func<List<ProductData>, bool>>
             {
@@ -123,7 +114,7 @@ namespace Craft
             float error = Math.Abs(time - targetTime);
             error += Math.Abs(temperature - targetTemperature);
 
-            formedBase.Quality -= error * 1; //TODO: penalty in SO
+            formedBase.Quality -= error * _config.BaseBakingPenaltyModifier;
         }
 
         public static void AddToppings()

@@ -23,8 +23,9 @@ public enum ProductCategory
     Failed
 }
 
-[CreateAssetMenu(fileName = "NewProduct", menuName = "Bakery/Product")]
+[CreateAssetMenu(fileName = "NewProduct", menuName = "Bakery/Product", order = -999)]
 public class ProductData : ItemTetrisSO {
+    //TODO: Remove itemName and sprites, they are described in ItemTetrisSO 
     public string itemName;
     [TextArea] public string description;
     public Sprite icon;

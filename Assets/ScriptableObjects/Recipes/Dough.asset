@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be5b1955c18463ead290ca021eaa7c6, type: 3}
+  m_Name: Dough
+  m_EditorClassIdentifier: Assembly-CSharp::BakerySO.RecipeData
+  Tag: BaseDough
+  ResultType: 3
+  Ingredients:
+  - Ingredient: {fileID: 11400000, guid: cf35af2e70ff24d49bc43d7ea34a6d34, type: 2}
+    Min: 1
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: 799e21e9658d5994ba707a2e71d47ef4, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: fad38aaefec617b4eb6a2c6a95183f4d, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: 9408dd7f64bf62943a6bf0ac4576c86d, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: e2674cc67db272e4fa479f496c9dbafd, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: a53ad96e8ac9a574a862c96944b3934c, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: ad91eed6b7419074ca912b8c9986ed8a, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: a77a134142124e4449d6a4c38e56a633, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1
+  - Ingredient: {fileID: 11400000, guid: ef0c454d16a4dba4e82049791bed5de8, type: 2}
+    Min: 0
+    Max: 2
+    Perfect: -1

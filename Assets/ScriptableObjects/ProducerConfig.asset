@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b985ea8dd44449ba8ef23a006ea3dc25, type: 3}
+  m_Name: ProducerConfig
+  m_EditorClassIdentifier: Assembly-CSharp::BakerySO.ProducerConfig
+  DoughRecipe: {fileID: 0}
+  BaseShortagePenaltyModifier: 1
+  BaseSurplusPenaltyModifier: 1
+  BaseRedundantPenaltyModifier: 1
+  BaseBakingPenaltyModifier: 1
+  BasePerfectBonusModifier: 1

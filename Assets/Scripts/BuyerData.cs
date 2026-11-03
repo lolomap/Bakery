@@ -13,6 +13,12 @@ public class BuyerData
     public List<string> demandPhrases; // Фразы при запросе товара
     public List<string> angryPhrases; // Фразы при уходе/раздражении
     public List<string> thankPhrases; // Фразы благодарности
+
+    public List<string> bargainPharses;
+
+    public List<string> BargainAccept;
+
+     public List<string> BargainReject; 
     public Color nameColor; // Цвет имени (для визуального различия групп)
     
     public string GetRandomGreeting() => greetingPhrases[Random.Range(0, greetingPhrases.Count)];

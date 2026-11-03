@@ -58,6 +58,9 @@ public class BuyerGenerator : MonoBehaviour
         newBuyer.demandPhrases = GenerateDemandPhrases(newBuyer.group, newBuyer.demand.type);
         newBuyer.angryPhrases = GenerateAngryPhrases(newBuyer.group);
         newBuyer.thankPhrases = GenerateThankPhrases(newBuyer.group);
+        newBuyer.bargainPharses = GenerateBargainPhrases(newBuyer.group);
+        newBuyer.BargainAccept = GenerateBargainAcceptPhrases(newBuyer.group);
+        newBuyer.BargainReject = GenerateBargainRejectPhrases(newBuyer.group);
         return newBuyer;
     }
     private BuyerGroup GenerateWeightedGroup(float progress)
@@ -447,4 +450,134 @@ public class BuyerGenerator : MonoBehaviour
         }
 
     }
+    private List<string> GenerateBargainPhrases(BuyerGroup group)
+{
+    switch (group)
+    {
+        case BuyerGroup.AmnestiedPrisoners:
+            return new List<string> {
+                "Скинь цену, браток, не обеднеешь.",
+                "Давай по-братски, уступи малость.",
+                "Чет дороговато за кусок теста, сбавь.",
+                "Не борзей с ценами, начальник.",
+                "Глядишь, и договоримся, если уступишь."
+            };
+        case BuyerGroup.Beggars:
+            return new List<string> {
+                "Христа ради, уступите копеечку...",
+                "Совсем грошей не осталось, сжальтесь.",
+                "Нельзя ли подешевле, милый человек?",
+                "Последнее отдаю, сбавьте цену...",
+                "Ради Бога, скиньте хоть чуть-чуть."
+            };
+        case BuyerGroup.Bohemians:
+            return new List<string> {
+                "Разве духовная пища должна стоить так дорого?",
+                "Уступите ради искусства, сударь.",
+                "Цена кусается сильнее, чем критики в газтах.",
+                "Нельзя ли оформить небольшую скидку для поэта?",
+                "Деньги — тлен, а скидка украсит вашу лавку."
+            };
+        case BuyerGroup.Deserters:
+            return new List<string> {
+                "Скинь, командир, у меня на патроны еле хватает.",
+                "Не лютуй, и так тошно на душе.",
+                "Уступи в цене, век не забуду.",
+                "Дороговато для беглого человека...",
+                "Сбавь цену, давай без лишних слов."
+            };
+        case BuyerGroup.Former:
+            return new List<string> {
+                "Помилуйте, откуда у меня такие деньги при новом режиме...",
+                "Нельзя ли по умеренной цене для старого знакомого?",
+                "Цены просто грабительские...",
+                "Уступите человеку из приличного общества.",
+                "Раньше это стоило сущие копейки..."
+            };
+        case BuyerGroup.Landowners:
+            return new List<string> {
+                "Вы с ума сошли с такими расценками!",
+                "Понизьте тон и цену, молодой человек.",
+                "Это возмутительно дорого для такого товара.",
+                "Уступите благородному господину, не позорьтесь.",
+                "Куда катится этот мир... Сбавьте цену."
+            };
+        case BuyerGroup.Peasants:
+            return new List<string> {
+                "Ой, дорого! Скинь копеечку, хозяин.",
+                "За такую булку полцены — красная цена.",
+                "Уступи крестьянину, мы же свои люди.",
+                "Нельзя ли подешевле? Урожай нынче не тот...",
+                "Сбавь малость, тяжело монеты достаются."
+            };
+        case BuyerGroup.ProvisionalGovernmentSupporters:
+            return new List<string> {
+                "Инфляция съедает все сбережения, нельзя ли уступить?",
+                "Рынок требует разумных цен, сударь.",
+                "Сбавьте цену, поддержите стабильность.",
+                "Это выше рыночной стоимости.",
+                "Давайте сойдемся на разумной компромиссной цене."
+            };
+        case BuyerGroup.SovietSupporters:
+            return new List<string> {
+                "Товарищ, спекулятивные цены подрывают революцию!",
+                "Классовая скидка положена трудящимся!",
+                "Убытки буржуазные нам не навязывай, уступи.",
+                "Давай по справедливости — снижай цену.",
+                "Советский человек не должен переплачивать!"
+            };
+        case BuyerGroup.Speculators:
+            return new List<string> {
+                "Ха, ну ты загнул! Давай оптом или дешевле.",
+                "Я же вижу рынок, сбавь аппетиты.",
+                "Скинь цену, я тебе потом клиентуру приведу.",
+                "Давай сойдемся посередине, деловой человек.",
+                "Не жадничай, гешефт должен быть выгодным."
+            };
+        case BuyerGroup.Workers:
+            return new List<string> {
+                "За такую цену мне всю смену пахать надо.",
+                "Товарищ пекарь, уступи пролетариату.",
+                "Сбавь для рабочего человека.",
+                "Не по-товарищески это — такие цены задирать.",
+                "Уступи немного, тяжело на заводе."
+            };
+        default:
+            return new List<string> {
+                "Нельзя ли подешевле?",
+                "Уступите в цене.",
+                "Сбавьте немного."
+            };
+    }
+}
+
+private List<string> GenerateBargainAcceptPhrases(BuyerGroup group)
+{
+    switch (group)
+    {
+        case BuyerGroup.AmnestiedPrisoners:
+            return new List<string> { "Уважал! Знаю толк в людях.", "Вот это по-нашему, по честному!" };
+        case BuyerGroup.SovietSupporters:
+            return new List<string> { "Верное решение, товарищ. Смычка города и деревни.", "По-социалистически." };
+        case BuyerGroup.Speculators:
+            return new List<string> { "Договорились. С тобой приятно иметь дело.", "Сделка века!" };
+        default:
+            return new List<string> { "Спасибо, выручил.", "Благодарю за уступку." };
+    }
+}
+
+private List<string> GenerateBargainRejectPhrases(BuyerGroup group)
+{
+    switch (group)
+    {
+        case BuyerGroup.AmnestiedPrisoners:
+            return new List<string> { "Жадный ты, бублик. Ну и ладно.", "Гхозяин нашлся..." };
+        case BuyerGroup.SovietSupporters:
+            return new List<string> { "Капиталистическая замашка! Жаловаться буду.", "Эксплуататор!" };
+        case BuyerGroup.Landowners:
+            return new List<string> { "Какое хамство! Больше сюда ни ногой.", "Скудоумная торговля." };
+        default:
+            return new List<string> { "Эх, жаль. Ну ладно.", "Никакой гибкости у вас." };
+    }
+}
 }

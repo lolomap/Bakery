@@ -58,4 +58,19 @@ public class Showcase : MonoBehaviour
         }
     }
 }
+    public float GetTotalShowcaseAttractiveness()
+    {
+        // Если на витрине ничего нет, она не привлекательна
+        if (itemsOnDisplay.Count == 0) return 0f;
+
+        float sumAttractiveness = 0f;
+
+        // Складываем свежесть каждого предмета
+        foreach (var item in itemsOnDisplay)
+        {
+            sumAttractiveness += item.GetAttractiveness();
+        }
+
+        return sumAttractiveness / visualSlots.Length;
+    }
 }
